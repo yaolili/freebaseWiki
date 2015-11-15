@@ -1,5 +1,5 @@
 #########################################################################
-# File Name: extractEntity.py
+# File Name: wikiIdWTPro.py 
 # Author: yaolili
 # mail: yaolili@pku.edu.cn
 # Created Time: Wed 11 Nov 2015 04:38:17 PM CST
