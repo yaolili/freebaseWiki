@@ -8,16 +8,20 @@
 
 import sys
 import os
-from getWikifierEntity import getWikiId
+from getWikifierEntity import getWikiIdEntity
 from linkMysql import connectDB
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print "sys.argv[1]: input test.txt.wikification.tagged.full.xml file"
-        print "sys.argv[2]: output file!"
+        print "sys.argv[2]: ouput file"
         exit()
-
-    wikiIdSet = getWikiId(sys.argv[1])
-    print wikiIdSet
-    result = connectDB(wikiIdSet)
-    print result
+    
+    output = file(sys.argv[2], 'w+')
+    wikiIdEntity = getWikiIdEntity(sys.argv[1])
+    result = connectDB(wikiIdEntity)
+    #print result
+    #print type(result)
+    for key in result:
+        output.write(key + "\t" + result[key] + "\n")
+    output.close()
