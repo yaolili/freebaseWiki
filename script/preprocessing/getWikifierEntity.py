@@ -37,6 +37,8 @@ def getWikiIdEntity(inputFile):
         return wikiIdEntity
     except IOError, e:
         print 'Could not open file:', e
+        wikiIdEntity = {}
+        return wikiIdEntity
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
