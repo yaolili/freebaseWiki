@@ -5,7 +5,7 @@
 first="$(date +"%T")"
 
 jar="./dist/wikifier-3.0-jar-with-dependencies.jar"
-inputPath="./data/testSample/sampleText/output"
+inputPath="./data/testSample/sampleText/Q07"
 outputPath="./data/testSample/sampleOutput/test"
 config="./configs/STAND_ALONE_GUROBI.xml"
 
