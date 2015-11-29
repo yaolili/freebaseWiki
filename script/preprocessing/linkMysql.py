@@ -17,37 +17,27 @@ def connectDB(wikiIdEntity):
         return result
     try:
         db = MySQLdb.connect(host="localhost", user="root", passwd="q1w2e3r4", db="wikiLink" )
-    except e:
-        print e
-    cursor = db.cursor()
-    wikiIdSet = []
-    #print "in linksql:"
-    #print wikiIdEntity
-    #print type(wikiIdEntity)
-    for key in wikiIdEntity:
-        #print key
-        wikiIdSet.append(key)
-        #print "wikiIdSet:"
-        #print wikiIdSet
-        #print type(wikiIdSet)
-    for wikiId in wikiIdSet:
-        sql = "SELECT * FROM wikiPro WHERE wikiId = %d" % (wikiId)
-        cursor.execute(sql)
-        #Notice! Here you can't use like this: result.append(cursor.fetchone())
-        string = cursor.fetchone()
-        #print string
-        #print type(string)
-        
-        if(string):
-            if int(string[1]) not in wikiIdEntity:
-                print "KeyError! %d not in wikiIdEntity!" % int(string[1])
-                exit()
-            sqlEntity = str(string[1]) + ":" + wikiIdEntity[int(string[1])]
-            result[sqlEntity] = string[2]
-    return result
+        cursor = db.cursor()
+        wikiIdSet = []
+        for key in wikiIdEntity:
+            wikiIdSet.append(key)
+        for wikiId in wikiIdSet:
+            getStrSql = "SELECT property FROM wikiPro WHERE wikiId = %d" % (wikiId)
+            cursor.execute(getStrSql)
+            #Notice! Here you can't use like this: result.append(cursor.fetchone())
+            string = cursor.fetchone()
+            idSql = "SELECT freebaseId FROM wikiFreebaseId WHERE wikiId = %d" % (wikiId)
+            cursor.execute(idSql)
+            freebaseId = cursor.fetchone()
+            if string and freebaseId:
+                sqlEntity = freebaseId[0] + ":" + wikiIdEntity[wikiId]
+                result[sqlEntity] = string[0]
+        return result
+    except MySQLdb.Error, e:
+        print e    
     db.close()
 
 if __name__ == '__main__':
-    #test usage!
+    #test usage! can not use now!
     aList = [2100075, 25964, 46313, 22212, 10779, 1564205, 5177, 435268, 5177, 30010, 30003, 52648, 195718, 25964, 11604823, 689, 5334607, 101623, 101623, 101623, 47917, 4721, 31717, 4721, 221773]
     print connectDB(aList)
